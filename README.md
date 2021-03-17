@@ -1,4 +1,4 @@
-# Intro_to_Scrapya
+# Intro_to_Scrapy
 Project to learn how to use Scrapy for WebScraping in python.
 
 Install Scrapy : pip install scrapy  
@@ -28,7 +28,8 @@ Start a new project : scrapy startproject WebCrawler
 * Pipelines.py : pipelines afin d'ajuster le format de sortie
 * Items.py : permet de définir les objets Item
 
-### Start scraping
+## Start scraping
+### Extract information in one page
 
 Open the Scrapy Shell : scrapy shell
 
@@ -72,3 +73,38 @@ the 3 first information are type - volumes- score  so :
 type_ = d[:1]  
 volumes = d[:2]  
 rating = d[:3]  
+
+### Extract from other pages
+
+Url in a span:  
+response.xpath('//span[@class="bgColor1"]//a/@href').extract()  
+output  
+['/manga.php?letter=B&show=50',   
+'/manga.php?letter=B&show=100',   
+'/manga.php?letter=B&show=950',  
+'/manga.php?letter=B&show=50',   
+'/manga.php?letter=B&show=100', '/manga.php?letter=B&show=950'  
+]  
+
+next_urls = response.xpath('//span[@class="bgColor1"]//a/@href').extract()  
+for next_url in next_urls:  
+    yield Request(response.urljoin(next_url), callback=self.parse_anime_list_page)  
+
+
+
+
+
+
+## Football Score
+
+url = 'https://m.flashscore.fr/'
+
+fetch(url)
+
+resonse.css('div.soccer').get()
+
+scores fini:  
+response.css('a.fin').get()  
+response.css('a.fin').attrib['href'] --> link  
+
+
