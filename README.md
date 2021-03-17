@@ -1,4 +1,4 @@
-# Intro_to_Scrapy
+# Intro_to_Scrapya
 Project to learn how to use Scrapy for WebScraping in python.
 
 Install Scrapy : pip install scrapy  
