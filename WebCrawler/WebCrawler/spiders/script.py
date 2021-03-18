@@ -10,7 +10,8 @@ class MangaBaseSpider(scrapy.Spider):
     
     def parse(self, response):
         xp = "//div[@id='horiznav_nav']//li/a/@href"
-        return (Request(url, callback=self.parse_manga_list_page) for url in response.xpath(xp).extract())
+        return (Request(url, callback=self.parse_manga_list_page) for url in \
+                response.xpath(xp).extract())
     
     def parse_manga_list_page(self, response):
         for tr_sel in response.css('div.js-categories-seasonal tr ~ tr'):
