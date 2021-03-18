@@ -43,7 +43,7 @@ class FootBaseSpider(scrapy.Spider):
 # =============================================================================
         
     def parse(self, response):
-        match_page_links = response.css('div.soccer a')
+        match_page_links = response.css('div.soccer a.fin') #a.fin,sched,live
         yield from response.follow_all(match_page_links, self.parse_result)
         
 # =============================================================================
@@ -63,5 +63,7 @@ class FootBaseSpider(scrapy.Spider):
         yield {
             'Teams': response.css('h3::text').get(default='').strip(),
             'Score': response.css('b::text').get(default='').strip(),
-            'Infos_sup': response.css('div.detail::text').getall()[1]
+            'Infos': response.css('div.detail::text').getall(),
+            #'Date': response.css('div.detail::text').getall()[3],
+            #'Mid_times_score': response.css('div.detail::text').getall()[0].strip() 
             }
